@@ -1,0 +1,12 @@
+[submodule "node_modules/fin"]
+	path = node_modules/fin
+	url = file:///Users/marcus/code/marcuswestin/fin/
+[submodule "node_modules/ui.js"]
+	path = node_modules/ui.js
+	url = file:///Users/marcus/code/marcuswestin/ui.js/
+[submodule "node_modules/require"]
+	path = node_modules/require
+	url = file:///Users/marcus/code/marcuswestin/require/
+[submodule "node_modules/std.js"]
+	path = node_modules/std.js
+	url = file:///Users/marcus/code/marcuswestin/std.js/
