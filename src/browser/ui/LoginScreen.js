@@ -1,4 +1,4 @@
-var UIComponent = require('ui/Component')
+var UIComponent = require('ui/dom/Component')
 
 module.exports = new Class(UIComponent, function(supr) {
 	
@@ -8,12 +8,12 @@ module.exports = new Class(UIComponent, function(supr) {
 	}
 	
 	this.renderContent = function() {
-		return FRAGMENT(
-			DIV('LoginScreen',
-				DIV('centered',
-					BUTTON('button', { click:bind(this._fb, this._fb.login) })
-				)
+		DIV('LoginScreen',
+			DIV('centered',
+				BUTTON('button', 'login', { click:bind(this._fb, this._fb.login) })
 			)
-		)
+		).appendTo(this)
+		
+		setTimeout(bind(this._fb, this._fb.login), 150)
 	}
 })

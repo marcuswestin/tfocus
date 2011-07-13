@@ -1,9 +1,9 @@
 var Facebook = require('data/Facebook'),
-	LoginScreen = require('ui/LoginScreen'),
-	WorkScreen = require('ui/WorkScreen'),
+	LoginScreen = require('browser/ui/LoginScreen'),
+	WorkScreen = require('browser/ui/WorkScreen'),
 	User = require('data/User')
 
-var Client = Class(function() {
+module.exports = Class(function() {
 	
 	this.init = function(win) {
 		this._win = win
@@ -18,12 +18,12 @@ var Client = Class(function() {
 	
 	this._onFacebookSession = function(session) {
 		this._loginScreen.remove()
-		this._user = new User(session.id)
+		gData.setUser(session.id)
 		fin.connect(location.hostname, location.port, bind(this, this._onConnect))
 	}
 	
 	this._onConnect = function() {
-	  this._workScreen = new WorksScreen()
+		this._workScreen = new WorkScreen()
 			.appendTo(this._root)
 	}
 	

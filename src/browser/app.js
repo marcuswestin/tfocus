@@ -1,6 +1,6 @@
-require('dom/NODES').exportGlobals()
+require('./globals')
 
-var Client = require('./Client'),
+var Client = require('browser/Client'),
   data = require('data')
 
 gClient = new Client(window)
