@@ -15,8 +15,6 @@ module.exports = new Class(UIComponent, function(supr) {
 		DIV('WorkScreen',
 			BUTTON({ click:bind(gData, gData.createTask) }, 'Create task'),
 			this._tasks=DIV('tasks')).appendTo(this)
-		
-		setTimeout(bind(gData, gData.createTask), 100)
 	}
 	
 	this._renderTask = function(task) {
