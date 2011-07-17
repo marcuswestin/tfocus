@@ -1,19 +1,15 @@
 var http = require('http'),
 	fin = require('fin'),
 	engine = require('fin/engines/development'),
-	requireServer = require('require/server')
+	requireServer = require('require/server'),
+	stylus = require('stylus'),
+	fs = require('fs')
 
 var server = http.createServer(function(req, res) {
-	if (requireServer.isRequireRequest(req)) { return }
-	res.writeHeader(200, { 'Content-Type':'text/html' })
-	res.end([
-		'<!doctype html>',
-		'<html>',
-		'<body>',
-		'<script src="/require',req.url,'"></script>',
-		'</body>',
-		'</html>'
-	].join('\n'))
+  requireServer.isRequireRequest(req)
+  || handleStylusRequest(req, res)
+  || handleHTMLRequest(req, res)
+  || sendError(res, "Unkown URL", 400)
 })
 
 fin.mount(server, engine)
@@ -35,5 +31,39 @@ requireServer
 	.addPath('browser', __dirname + '/client/browser')
 	.addFile('browser', __dirname + '/client/browser/browser.js')
 
-	
-	
+var clients = {
+  'browser': 'browser/browser',
+  'iphone': 'ios/iphone'
+}
+
+function handleHTMLRequest(req, res) {
+  var match = req.url.match(/^\/(\w+)$/)
+  if (!match || !clients[match[1]]) { return false }
+  var filename = __dirname + '/client/' + clients[match[1]] + '.html'
+  fs.readFile(filename, 'utf8', function(err, html) {
+    if (err) { return sendError(res, err, 404) }
+    res.writeHead(200, { 'Content-Type':'text/html' })
+    res.end(html)
+  })
+  return true
+}
+
+function handleStylusRequest(req, res) {
+  var match = req.url.match(/^\/stylus\/(\w+)\.styl$/)
+  if (!match || !clients[match[1]]) { return false }
+  var filename = __dirname + '/client/' + clients[match[1]] + '.styl'
+  fs.readFile(filename, 'utf8', function(err, stylusSource) {
+    if (err) { return sendError(res, err, 404) }
+    stylus.render(stylusSource, { filename:filename }, function(err, css) {
+      if (err) { return sendError(res, err, 500) }
+      res.writeHead(200, { 'Content-Type':'text/css' })
+      res.end(css)
+    })
+  })
+  return true
+}
+
+function sendError(res, err, code) {
+  res.writeHead(code || 500)
+  res.end(err.toString())
+}
