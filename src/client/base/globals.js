@@ -9,3 +9,4 @@ NODES.attributeHandlers.data = function(dataProperty) {
 
 Class = require('std/Class')
 bind = require('std/bind')
+gData = require('data')

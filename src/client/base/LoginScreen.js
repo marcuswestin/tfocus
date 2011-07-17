@@ -2,18 +2,13 @@ var UIComponent = require('ui/dom/Component')
 
 module.exports = new Class(UIComponent, function(supr) {
 	
-	this.init = function(fb) {
-		supr(this, 'init')
-		this._fb = fb
-	}
-	
 	this.renderContent = function() {
 		DIV('LoginScreen',
 			DIV('centered',
-				BUTTON('button', 'login', { click:bind(this._fb, this._fb.login) })
+				BUTTON('button', 'login', { click:bind(gClient, gClient.login) })
 			)
 		).appendTo(this)
 		
-		setTimeout(bind(this._fb, this._fb.login), 150)
+		setTimeout(bind(gClient, gClient.login), 150)
 	}
 })

@@ -1,7 +1,8 @@
 require('globals')
 
-var Client = require('client/Client'),
-  data = require('data')
+var Client = require('base/Client'),
+  LoginScreen = require('base/LoginScreen'),
+  WorkScreen = require('base/WorkScreen')
 
-gClient = new Client(window)
-gData = data
+gClient = new Client(window, new LoginScreen, new WorkScreen)
+gClient.start()

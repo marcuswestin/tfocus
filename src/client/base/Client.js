@@ -1,19 +1,22 @@
-var Facebook = require('data/Facebook'),
-	LoginScreen = require('client/browser/LoginScreen'),
-	WorkScreen = require('client/browser/WorkScreen'),
-	User = require('data/User')
+var Facebook = require('data/Facebook')
 
 module.exports = Class(function() {
 	
-	this.init = function(win) {
+	this.init = function(win, loginScreen, worksScreen) {
 		this._win = win
+		this._loginScreen = loginScreen
+		this._workScreen = worksScreen
+		
 		this._root = win.document.body
 		this._fb = new Facebook(this._win)
 			.subscribe('Session', bind(this, this._onFacebookSession))
 			.load()
-		
-		this._loginScreen = new LoginScreen(this._fb)
-			.appendTo(this._root)
+	}
+	
+	this.start = function() { this._loginScreen.appendTo(this._root) }
+	
+	this.login = function() {
+	  this._fb.login()
 	}
 	
 	this._onFacebookSession = function(session) {
@@ -23,8 +26,7 @@ module.exports = Class(function() {
 	}
 	
 	this._onConnect = function() {
-		this._workScreen = new WorkScreen()
-			.appendTo(this._root)
+		this._workScreen.appendTo(this._root)
 	}
 	
 	this.getUser = function() { return this._user }

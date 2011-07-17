@@ -24,10 +24,16 @@ requireServer
 	.addPath('std', __dirname + '/../node_modules/std.js')
 	.addPath('fin', __dirname + '/../node_modules/fin')
 	.addPath('ui', __dirname + '/../node_modules/ui.js')
-	.addPath('client', __dirname + '/client')
 	.addPath('data', __dirname + '/data')
-	
-	.addFile('globals', __dirname + '/client/globals.js')
-	.addFile('browser', __dirname + '/client/browser/browser.js')
+
+	.addPath('base', __dirname + '/client/base')
+	.addFile('globals', __dirname + '/client/base/globals.js')
+
+	.addPath('iphone', __dirname + '/client/iphone')
 	.addFile('iphone', __dirname + '/client/ios/iphone.js')
+
+	.addPath('browser', __dirname + '/client/browser')
+	.addFile('browser', __dirname + '/client/browser/browser.js')
+
+	
 	
