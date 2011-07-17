@@ -1,6 +1,6 @@
-require('./globals')
+require('globals')
 
-var Client = require('browser/Client'),
+var Client = require('client/Client'),
   data = require('data')
 
 gClient = new Client(window)

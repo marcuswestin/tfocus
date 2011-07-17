@@ -10,7 +10,7 @@ var server = http.createServer(function(req, res) {
 		'<!doctype html>',
 		'<html>',
 		'<body>',
-		'<script src="/require/browser-app"></script>',
+		'<script src="/require',req.url,'"></script>',
 		'</body>',
 		'</html>'
 	].join('\n'))
@@ -19,12 +19,15 @@ var server = http.createServer(function(req, res) {
 fin.mount(server, engine)
 requireServer.mount(server, { port:8080 })
 server.listen(8080)
-console.log('listening on :8080')
 
 requireServer
 	.addPath('std', __dirname + '/../node_modules/std.js')
 	.addPath('fin', __dirname + '/../node_modules/fin')
 	.addPath('ui', __dirname + '/../node_modules/ui.js')
-	.addPath('browser', __dirname + '/browser')
-	.addFile('browser-app', __dirname + '/browser/app.js')
+	.addPath('client', __dirname + '/client')
 	.addPath('data', __dirname + '/data')
+	
+	.addFile('globals', __dirname + '/client/globals.js')
+	.addFile('browser', __dirname + '/client/browser/browser.js')
+	.addFile('iphone', __dirname + '/client/ios/iphone.js')
+	

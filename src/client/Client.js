@@ -1,6 +1,6 @@
 var Facebook = require('data/Facebook'),
-	LoginScreen = require('browser/ui/LoginScreen'),
-	WorkScreen = require('browser/ui/WorkScreen'),
+	LoginScreen = require('client/browser/LoginScreen'),
+	WorkScreen = require('client/browser/WorkScreen'),
 	User = require('data/User')
 
 module.exports = Class(function() {
