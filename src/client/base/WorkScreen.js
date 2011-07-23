@@ -13,33 +13,49 @@ module.exports = new Class(UIComponent, function(supr) {
 			.on('remove', bind(this, this._removeTask))
 
 		DIV('WorkScreen',
-			this._renderHeader(),
-			this._renderBody(),
-			this._renderFooter()
+			this._header = this._renderHeader(),
+			this._body = this._renderBody(),
+			this._footer = this._renderFooter()
 		).appendTo(this)
 	}
 	
 	this._renderHeader = function() {
-		return this._header = DIV('header',
+		return DIV('header',
 			BUTTON({ click:bind(gData, gData.createTask) }, 'Create task')
 		)
 	}
 	
 	this._renderBody = function() {
-		return this._body = DIV('body',
+		return DIV('body',
 			this._taskList = DIV('taskList')
 		)
 	}
 	
 	this._renderFooter = function() {
-		return this._footer = DIV('footer')
+		return DIV('footer')
 	}
 
 	this._renderTask = function(task) {
-		this._nodes[task.id] = DIV('task', { data:task.title }).appendTo(this._taskList)
+		this._nodes[task._oid] = DIV('task', { data:task.title, mouseup:bind(this, this._handleTaskClick, task) }).appendTo(this._taskList)
+	}
+	
+	this._handleTaskClick = function(task) {
+		if (this._currentTask) {
+			this._deselectTask(this._currentTask, this._getTaskNode(this._currentTask))
+		}
+		if (task == this._currentTask) {
+			delete this._currentTask
+			return
+		}
+		this._currentTask = task
+		this._selectTask(task, this._getTaskNode(task))
 	}
 
 	this._removeTask = function(task) {
-		this._nodes[task.id].remove()
+		this._getTaskNode(task).remove()
+	}
+	
+	this._getTaskNode = function(task) {
+		return this._nodes[task._oid]
 	}
 })
