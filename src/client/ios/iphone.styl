@@ -1,5 +1,5 @@
 header-height = 30px
-footer-height = 20px
+footer-height = 0px
 
 reset()
 	body, html
@@ -21,7 +21,7 @@ reset()
 	.body
 		component(); top header-height + 4px; bottom footer-height;
 		.task
-			padding 8px; border-bottom:1px solid #ccc;
+			padding 4px 8px 8px; border-bottom:1px solid #ccc; height:22px; line-height:26px; overflow:hidden;
 	.footer
 		component(); height footer-height; bottom 0;
 

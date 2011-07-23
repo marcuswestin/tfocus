@@ -3,8 +3,6 @@ var WorkScreen = require('base/WorkScreen'),
 
 module.exports = Class(WorkScreen, function() {
 	
-	this._taskHeight = 23
-
 	this._renderHeader = function() {
 		return DIV('header',
 			DIV('shadow',
