@@ -51,7 +51,7 @@ function handleHTMLRequest(req, res) {
 }
 
 function handleImageRequest(req, res) {
-	var match = req.url.match(/^\/(\w+)\/img\/(\w+)\.png$/)
+	var match = req.url.match(/^\/img\/(\w+)\/([\w\/]+)\.png$/)
 	if (!match || !clients[match[1]]) { return false }
 	var filename = __dirname + '/client/' + clients[match[1]] + '-img/' + match[2] + '.png'
 	fs.readFile(filename, function(err, imageData) {
