@@ -1,6 +1,3 @@
-header-height = 30px
-footer-height = 0px
-
 reset()
 	body, html
 		margin 0; padding 0; overflow: hidden; font-family: Helvetica; font-size:20px;
@@ -15,13 +12,16 @@ reset()
 
 .WorkScreen
 	.header
-		component(); height header-height; top 0; padding 4px 4px 0; box-shadow 0 3px 5px #888;
+		component(); top 0; padding 4px 4px 0; box-shadow 0 3px 5px #888;
 		.logo
 			text-shadow 2px 2px 3px #333;
 	.body
-		component(); top header-height + 4px; bottom footer-height;
+		component();
 		.task
 			padding 4px 8px 8px; border-bottom:1px solid #ccc; height:22px; line-height:26px; overflow:hidden;
 	.footer
-		component(); height footer-height; bottom 0;
+		component(); bottom 0;
+
+.taskFocus textarea
+	font-size 16px; padding 8px;
 

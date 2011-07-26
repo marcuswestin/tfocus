@@ -2,6 +2,9 @@ var UIComponent = require('ui/dom/Component')
 
 module.exports = new Class(UIComponent, function(supr) {
 
+	this._headerHeight = 30
+	this._footerHeight = 0
+	
 	this.init = function() {
 		supr(this, 'init')
 		this._nodes = {}
@@ -13,9 +16,9 @@ module.exports = new Class(UIComponent, function(supr) {
 			.on('remove', bind(this, this._removeTask))
 
 		DIV('WorkScreen',
-			this._header = this._renderHeader(),
-			this._body = this._renderBody(),
-			this._footer = this._renderFooter()
+			this._header = this._renderHeader().render(this).style({ height:this._headerHeight }),
+			this._body = this._renderBody().render(this).style({ top:this._headerHeight + 4, bottom:this._footerHeight }),
+			this._footer = this._renderFooter().render(this).style({ height:this._footerHeight })
 		).appendTo(this)
 	}
 	
