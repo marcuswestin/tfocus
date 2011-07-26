@@ -9,6 +9,7 @@ var server = http.createServer(function(req, res) {
 	requireServer.isRequireRequest(req)
 	|| handleStylusRequest(req, res)
 	|| handleHTMLRequest(req, res)
+	|| handleImageRequest(req, res)
 	|| sendError(res, "Unkown URL", 400)
 })
 
@@ -45,6 +46,19 @@ function handleHTMLRequest(req, res) {
 		if (err) { return sendError(res, err, 404) }
 		res.writeHead(200, { 'Content-Type':'text/html' })
 		res.end(html)
+	})
+	return true
+}
+
+function handleImageRequest(req, res) {
+	var match = req.url.match(/^\/(\w+)\/img\/(\w+)\.png$/)
+	if (!match || !clients[match[1]]) { return false }
+	var filename = __dirname + '/client/' + clients[match[1]] + '-img/' + match[2] + '.png'
+	fs.readFile(filename, function(err, imageData) {
+		console.log(filename, err)
+		if (err) { return sendError(res, err, 404) }
+		res.writeHead(200, { 'Content-Type':'image/png' })
+		res.end(imageData)
 	})
 	return true
 }
