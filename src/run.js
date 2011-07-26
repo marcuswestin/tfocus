@@ -55,7 +55,6 @@ function handleImageRequest(req, res) {
 	if (!match || !clients[match[1]]) { return false }
 	var filename = __dirname + '/client/' + clients[match[1]] + '-img/' + match[2] + '.png'
 	fs.readFile(filename, function(err, imageData) {
-		console.log(filename, err)
 		if (err) { return sendError(res, err, 404) }
 		res.writeHead(200, { 'Content-Type':'image/png' })
 		res.end(imageData)
