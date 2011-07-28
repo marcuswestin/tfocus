@@ -15,10 +15,11 @@ var server = http.createServer(function(req, res) {
 	|| sendError(res, "Unkown URL", 400)
 })
 
-var port = 80
+var port = 80,
+	host = process.argv[2] || 'localhost'
 fin.mount(server, engine)
-requireServer.mount(server, { port:port })
-server.listen(port)
+requireServer.mount(server, { port:port, host:host })
+server.listen(port, host)
 
 requireServer
 	.addPath('std', __dirname + '/../node_modules/std.js')
