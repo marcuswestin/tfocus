@@ -10,12 +10,15 @@ var server = http.createServer(function(req, res) {
 	|| handleStylusRequest(req, res)
 	|| handleHTMLRequest(req, res)
 	|| handleImageRequest(req, res)
+	|| handleBaseRequest(req, res)
+	|| handleOfflineManifestRequest(req, res)
 	|| sendError(res, "Unkown URL", 400)
 })
 
+var port = 80
 fin.mount(server, engine)
-requireServer.mount(server, { port:8080 })
-server.listen(8080)
+requireServer.mount(server, { port:port })
+server.listen(port)
 
 requireServer
 	.addPath('std', __dirname + '/../node_modules/std.js')
@@ -74,6 +77,37 @@ function handleStylusRequest(req, res) {
 			res.end(css)
 		})
 	})
+	return true
+}
+
+function handleBaseRequest(req, res) {
+	if (req.url != '/') { return false }
+	var userAgent = req.headers['user-agent']
+	var location = 
+		  userAgent.match('iPad') ? 'iphone'
+		: userAgent.match('iPhone') ? 'iphone'
+		: userAgent.match('iPod') ? 'iphone'
+		: 'iphone'
+	res.writeHead(302, { 'Location': '/' + location })
+	res.end()
+}
+
+function handleOfflineManifestRequest(req, res) {
+	var match = req.url.match(/^\/offline-manifest\/(\w+)\.manifest$/)
+	if (!match || !clients[match[1]]) { return false }
+	var userAgent = req.headers['user-agent'],
+		isMobile = userAgent.match('iPad') || userAgent.match('iPod') || userAgent.match('iPhone')
+	if (isMobile) {
+		res.writeHead(200, { 'Content-Type':'text/cache-manifest' })
+		res.write([
+			'CACHE MANIFEST',
+			'# ' + new Date().getTime(),
+			'/require/iphone',
+			'/stylus/iphone.styl'
+		].join('\n'))
+	} else {
+		res.writeHead(204) // No-Content
+	}
 	return true
 }
 
