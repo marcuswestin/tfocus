@@ -25,7 +25,8 @@ module.exports = Class(WorkScreen, function() {
 		node.style({ height:this._taskHeight })
 	}
 	
-	this._selectTask = function(task, node) {
+	this._selectTask = function(task) {
+		var node = this._getTaskNode(task)
 		if (!this._taskFocus) {
 			this._taskFocus = DIV('taskFocus',
 				this._taskTitleInput = TEXTAREA('editableTitle', { 

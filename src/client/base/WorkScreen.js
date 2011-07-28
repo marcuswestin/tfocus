@@ -51,7 +51,7 @@ module.exports = new Class(UIComponent, function(supr) {
 			return
 		}
 		this._currentTask = task
-		this._selectTask(task, this._getTaskNode(task))
+		this._selectTask(task)
 	}
 
 	this._removeTask = function(task) {
