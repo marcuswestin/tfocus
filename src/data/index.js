@@ -25,6 +25,10 @@ function setUser(userID) {
 	user = new fin.orm.User(userID)
 }
 
-function createTask() {
-	gData.taskList.push(new fin.orm.Task({ title:"A task!", owner:user }))
+function createTask(callback) {
+	var task = new fin.orm.Task({ title:"A task!", owner:user })
+	gData.taskList.push(task)
+	finOrmAPI.waitForGUID(task, function(id) {
+		callback(task)
+	})
 }

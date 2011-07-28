@@ -8,7 +8,7 @@ module.exports = Class(WorkScreen, function() {
 		return DIV('header',
 			DIV('shadow',
 				SPAN('logo', 'Work'),
-				BUTTON({ click:bind(gData, gData.createTask) }, 'Create task')
+				BUTTON({ click:bind(gData, gData.createTask, bind(this, this._selectTask)) }, 'Create task')
 			)
 		)
 	}
