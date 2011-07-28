@@ -57,6 +57,5 @@ module.exports = Class(WorkScreen, function() {
 	
 	this._onFocusedTaskTitleBlur = function() {
 		this._taskFocus.remove()
-		this._focusedTask.release()
 	}
 })
