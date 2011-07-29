@@ -10,5 +10,7 @@ tfocus
 	tfokus
 	teafokus
 	teefokus
+	tefocus
+	tefokus
 yfocus
 
