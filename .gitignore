@@ -1,2 +1,8 @@
 .DS_STORE
+
+# Fin development
 _development-engine-dump.json
+
+# Waf stuff
+build
+.lock-wafbuild

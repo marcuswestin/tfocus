@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var requireCompiler = require('require/compiler'),
+	configureRequire = require('./configureRequire'),
+	sys = require('sys')
+
+configureRequire(requireCompiler)
+
+sys.puts(requireCompiler.compile(process.argv[2]))

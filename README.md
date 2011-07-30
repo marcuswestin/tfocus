@@ -20,4 +20,5 @@ https://github.com/marcuswestin/work
 
 	git clone git@github.com:marcuswestin/work.git
 	cd work
-	node src/run.js 96.126.98.135
+	./scripts/runServer 96.126.98.135
+

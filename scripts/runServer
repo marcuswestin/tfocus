@@ -1,9 +1,12 @@
+#!/usr/bin/env node
+
 var http = require('http'),
 	fin = require('fin'),
 	engine = require('fin/engines/development'),
 	requireServer = require('require/server'),
 	stylus = require('stylus'),
-	fs = require('fs')
+	fs = require('fs'),
+	configureRequire = require('./configureRequire')
 
 var server = http.createServer(function(req, res) {
 	requireServer.isRequireRequest(req)
@@ -16,26 +19,13 @@ var server = http.createServer(function(req, res) {
 })
 
 var port = 80,
-	host = process.argv[2] || 'localhost'
+	host = process.argv[2] || 'localhost',
+	srcDir = __dirname + '/../src'
+
 fin.mount(server, engine)
+configureRequire(requireServer)
 requireServer.mount(server, { port:port, host:host })
 server.listen(port, host)
-
-requireServer
-	.addPath('std', __dirname + '/../node_modules/std.js')
-	.addPath('fin', __dirname + '/../node_modules/fin')
-	.addPath('ui', __dirname + '/../node_modules/ui.js')
-	.addFile('scrollability', __dirname + '/../node_modules/scrollability/scrollability.js')
-
-	.addPath('data', __dirname + '/data')
-	.addPath('base', __dirname + '/client/base')
-	.addFile('globals', __dirname + '/client/base/globals.js')
-
-	.addPath('ios', __dirname + '/client/ios')
-	.addFile('iphone', __dirname + '/client/ios/iphone.js')
-
-	.addPath('browser', __dirname + '/client/browser')
-	.addFile('browser', __dirname + '/client/browser/browser.js')
 
 var clients = {
 	'browser': 'browser/browser',
@@ -45,7 +35,7 @@ var clients = {
 function handleHTMLRequest(req, res) {
 	var match = req.url.match(/^\/(\w+)$/)
 	if (!match || !clients[match[1]]) { return false }
-	var filename = __dirname + '/client/' + clients[match[1]] + '.html'
+	var filename = srcDir + '/client/' + clients[match[1]] + '.html'
 	fs.readFile(filename, 'utf8', function(err, html) {
 		if (err) { return sendError(res, err, 404) }
 		res.writeHead(200, { 'Content-Type':'text/html' })
@@ -57,7 +47,7 @@ function handleHTMLRequest(req, res) {
 function handleImageRequest(req, res) {
 	var match = req.url.match(/^\/img\/(\w+)\/([\w\/]+)\.png$/)
 	if (!match || !clients[match[1]]) { return false }
-	var filename = __dirname + '/client/' + clients[match[1]] + '-img/' + match[2] + '.png'
+	var filename = srcDir + '/client/' + clients[match[1]] + '-img/' + match[2] + '.png'
 	fs.readFile(filename, function(err, imageData) {
 		if (err) { return sendError(res, err, 404) }
 		res.writeHead(200, { 'Content-Type':'image/png' })
@@ -69,7 +59,7 @@ function handleImageRequest(req, res) {
 function handleStylusRequest(req, res) {
 	var match = req.url.match(/^\/stylus\/(\w+)\.styl$/)
 	if (!match || !clients[match[1]]) { return false }
-	var filename = __dirname + '/client/' + clients[match[1]] + '.styl'
+	var filename = srcDir + '/client/' + clients[match[1]] + '.styl'
 	fs.readFile(filename, 'utf8', function(err, stylusSource) {
 		if (err) { return sendError(res, err, 404) }
 		stylus.render(stylusSource, { filename:filename }, function(err, css) {
