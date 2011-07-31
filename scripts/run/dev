@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-new (require('../src/server/DevServer'))({
+new (require('../../src/server/DevServer'))({
 	port: 80,
 	host: 'localhost',
-	staticDir: __dirname + '/../src',
+	staticDir: __dirname + '/../../src',
 	engine: 'development',
 	printErrors: true
 }).run()
