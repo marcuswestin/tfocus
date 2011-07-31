@@ -1,3 +1,8 @@
 #!/usr/bin/env node
-throw new Error("Not ready yet")
-// new (require('../src/server/ProdServer'))().run()
+new (require('../src/server/Server'))({
+	port: 80,
+	host: null,
+	staticDir: __dirname + '/../build/static',
+	engine: 'development',
+	printErrors: true
+}).run()

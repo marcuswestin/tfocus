@@ -1,34 +1,20 @@
 var Class = require('std/Class'),
 	bind = require('std/bind'),
 	each = require('std/each'),
-	extend = require('std/extend'),
 	http = require('http'),
 	fin = require('fin'),
 	engine = require('fin/engines/development'),
 	stylus = require('stylus'),
-	fs = require('fs')
+	fs = require('fs'),
+	path = require('path')
 
 module.exports = Class(function() {
 	
-	this._requestHandlers = {
-		'prod': this._handleProdRequest,
-		'dev': this._handleDevRequest
-	}
-	
-	var defaults = {
-		port: 80,
-		host: 'localhost',
-		staticDir: __dirname + '/..',
-		engine: 'development',
-		printStack: false
-	}
-	
 	this.init = function(opts) {
-		opts = extend(opts, defaults)
 		this._port = opts.port
 		this._host = opts.host
-		this._staticDir = opts.staticDir
-		this._printStack = opts.printStack
+		this._staticDir = path.normalize(opts.staticDir)
+		this._printErrors = opts.printErrors
 		this._finEngine = require('fin/engines/' + opts.engine)
 		this._httpServer = http.createServer(bind(this, this._routeRequest))
 	}
@@ -81,11 +67,11 @@ module.exports = Class(function() {
 	}
 	
 	this._clients = { browser:'browser/browser', iphone:'ios/iphone' }
-	this._currentVersionLink = ''
+	this._currentVersionLink = 'current'
 	this._handleClientHTMLRequest = function(match, req, res) {
 		var clientPathBase = this._clients[match[1]]
 		if (!clientPathBase) { return this._sendError(res, 404) }
-		this._sendStaticFile(this._currentVersionLink, '/client/' + clientPathBase, 'html', res)
+		this._sendStaticFile(this._currentVersionLink, 'client/' + clientPathBase, 'html', res)
 	}
 	
 	this._handleStaticRequest = function(match, req, res) {
@@ -111,7 +97,7 @@ module.exports = Class(function() {
 
 	this._sendError = function(res, code, err) {
 		res.writeHead(code || 500)
-		var message = err && (this._printStack && err.stack ? err.stack : err.message || err)
+		var message = this._printErrors && (err.stack ? err.stack : err.message || err)
 		res.end(message)
 	}
 })
