@@ -30,8 +30,10 @@ def embedJS(self):
 	htmlContent = self.inputs[0].read()
 	compiledJS = self.inputs[1].read()
 
-	includeString = '<script src="/require/'+self.generator.client+'"></script>'
-	htmlContent = htmlContent.replace(includeString, '<script>'+compiledJS+'</script>')
+	htmlContent = htmlContent.replace('/current/', '/'+self.env.VERSION+'/')
+	scriptInclude = '<script src="/require/'+self.generator.client+'"></script>'
+	htmlContent = htmlContent.replace(scriptInclude, '<script>'+compiledJS+'</script>')
+		
 
 	self.outputs[0].write(htmlContent)
 
