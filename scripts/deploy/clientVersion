@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e # die on an error
+
+source scripts/conf/remoteConf
+
+echo "enable client version ${VERSION} on ${SERVER}..."
+
+echo "ssh..."
+echo "
+	set -e # die on an error
+	
+	cd ${REMOTE_DIR}
+	
+	echo 'symlink...'
+	ln -snf ${VERSION} ${STATIC_DIR}/current
+
+	exit 0
+" | ssh ${SERVER} bash
+
+echo "done"

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -e # die on an error
+
+source scripts/conf/remoteConf
+
+echo "push ${VERSION} to ${SERVER}:${REMOTE_DIR}/${VERSION_DIR}"
+
+echo "zip and tar..."
+tar -czf ${TARBALL_PATH} ${VERSION_DIR}
+
+echo "scp..."
+scp ${TARBALL_PATH} ${SERVER}:${REMOTE_DIR}/${TARBALL_PATH}
+
+echo "ssh..."
+echo "
+	set -e # die on an error
+	
+	cd ${REMOTE_DIR}
+	
+	echo 'unpack tarball...'
+	tar -xzf ${TARBALL_PATH}
+	
+	echo 'remove remote tarball...'
+	rm ${TARBALL_PATH}
+	
+	exit 0
+" | ssh ${SERVER} bash
+
+echo "remove local tarball..."
+rm ${TARBALL_PATH}
+
+echo "done"

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e # die on an error
+
+source scripts/conf/remoteConf
+
+DEPLOY="deploy-`date +%s`"
+
+echo "restart node server on ${SERVER}..."
+
+echo "ssh..."
+echo "
+	# do not die on an error, as killall may not have a process to kill
+	
+	cd ${REMOTE_DIR}
+	
+	echo 'kill...'
+	killall node
+	
+	echo 'start...'
+	nohup scripts/run/prod &>${DEPLOY}.log &
+	
+	exit 0
+" | ssh ${SERVER} bash
+
+echo "done"
+
+
+# sudo killall node
+# nohup node run/prod.js &>dashboard-${BUILD}.log&
