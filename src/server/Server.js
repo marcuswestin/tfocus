@@ -49,7 +49,7 @@ module.exports = Class(function() {
 			this._handlers[i].call(this, match, req, res)
 			return
 		}
-		this._sendError(res, 400, "Unknown URL")
+		this._sendError(res, 404, "Unknown URL")
 	}
 	
 	/* Request handlers
