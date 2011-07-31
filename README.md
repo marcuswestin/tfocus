@@ -22,3 +22,15 @@ https://github.com/marcuswestin/work
 	cd work
 	./scripts/runServer 96.126.98.135
 
+mkdir -p tfocus/build/static
+mkdir -p tfocus/scripts
+mkdir -p tfocus/src/server
+mkdir -p tfocus/node_modules
+
+96.126.98.135
+bot pass wud6sj&dke73d
+in .ssh/config
+	host tfocus
+	HostName 96.126.98.135
+	IdentityFile ~/.ssh/id_rsa.tfocus
+	User bot
