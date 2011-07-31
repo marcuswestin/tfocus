@@ -35,4 +35,9 @@ module.exports = Class(Server, function(supr) {
 			})
 		})
 	}
+	
+	this._getStaticPath = function(version, pathBase, extension) {
+		return this._staticDir+'/'+pathBase+'.'+extension
+	}
+	
 })

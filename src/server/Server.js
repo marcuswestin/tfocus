@@ -86,13 +86,17 @@ module.exports = Class(function() {
 	this._contentTypes = { html:'text/html', js:'text/javascript', png:'image/png' }
 	this._sendStaticFile = function(version, pathBase, extension, res) {
 		// TODO read from memory cache
-		fs.readFile(this._staticDir+'/'+version+'/'+pathBase+'.'+extension, 'utf8', bind(this, function(err, contents) {
+		fs.readFile(this._getStaticPath(version, pathBase, extension), 'utf8', bind(this, function(err, contents) {
 			if (err) { return this._sendError(res, 404, err) }
 			// TODO cache in memory
 			// TODO cache
 			res.writeHead(200, { 'Content-Type':this._contentTypes[extension] })
 			res.end(contents)
 		}))
+	}
+	
+	this._getStaticPath = function(version, pathBase, extension) {
+		return this._staticDir+'/'+version+'/'+pathBase+'.'+extension
 	}
 
 	this._sendError = function(res, code, err) {
