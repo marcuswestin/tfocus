@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var stylus = require('stylus'),
+	fs = require('fs'),
+	sys = require('sys')
+
+var filename = process.argv[2],
+	stylusSource = fs.readFileSync(filename, 'utf8')
+
+stylus(stylusSource)
+	.set('filename', filename)
+	.set('compress', true)
+	.define('url', stylus.url())
+	.render(function(err, css) {
+		if (err) { return process.exit(-1) }
+		sys.puts(css)
+	})
