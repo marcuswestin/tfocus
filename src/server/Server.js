@@ -90,6 +90,7 @@ module.exports = Class(function() {
 			if (err) { return this._sendError(res, 404, err) }
 			// TODO cache in memory
 			// TODO cache
+			// TODO content length
 			res.writeHead(200, { 'Content-Type':this._contentTypes[extension] })
 			res.end(contents)
 		}))
