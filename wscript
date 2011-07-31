@@ -1,6 +1,5 @@
 import os
 import time
-import waflib
 import inspect
 import getpass
 
@@ -43,5 +42,5 @@ def gzip(self):
 
 def installClientFiles(self):
 	for input in self.inputs:
-		self.exec_command(waflib.Utils.subst_vars('mkdir -p  ${INSTALL_DIR}/'+input.bld_dir(), self.env))
-		self.exec_command(waflib.Utils.subst_vars('cp '+input.abspath()+' ${INSTALL_DIR}/'+input.bld_dir(), self.env))
+		self.exec_command('mkdir -p '+self.env.INSTALL_DIR+'/'+input.bld_dir())
+		self.exec_command('cp '+input.abspath()+' '+self.env.INSTALL_DIR+'/'+input.bld_dir())
