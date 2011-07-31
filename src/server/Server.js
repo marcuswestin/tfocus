@@ -78,7 +78,7 @@ module.exports = Class(function() {
 		var version = match[1],
 			path = match[2],
 			extension = match[3]
-		this._sendStaticFile(version, path, 'html', res)
+		this._sendStaticFile(version, path, extension, res)
 	}
 	
 	/* Util
