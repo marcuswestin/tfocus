@@ -33,7 +33,7 @@ module.exports = Class(function() {
 		this
 			._setupRoute(/^\/$/, this._handleRootRequest)
 			._setupRoute(/^\/(\w+)\/$/, this._handleClientHTMLRequest)
-			._setupRoute(/^\/static\/([\w\d]+)\/([^\.]+)\.(\w+)/, this._handleStaticRequest)
+			._setupRoute(/^\/static\/([\w\d-]+)\/([^\.]+)\.(\w+)/, this._handleStaticRequest)
 	}
 	
 	this._setupRoute = function(regex, handler) {
