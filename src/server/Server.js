@@ -4,7 +4,6 @@ var Class = require('std/Class'),
 	http = require('http'),
 	fin = require('fin'),
 	engine = require('fin/engines/development'),
-	stylus = require('stylus'),
 	fs = require('fs'),
 	path = require('path')
 
