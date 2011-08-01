@@ -1,6 +1,7 @@
-VERSION=$1
+VERSION="$1"
 SERVER="tfocus"
 REMOTE_DIR="tfocus"
-STATIC_DIR=build/static
-VERSION_DIR=${STATIC_DIR}/${VERSION}
-TARBALL_PATH=${VERSION_DIR}.tar.gz
+STATIC_DIR="build/static"
+VERSION_DIR="${STATIC_DIR}/${VERSION}"
+CONF_DIR="scripts/conf"
+TARBALL_PATH="${VERSION_DIR}.tar.gz"

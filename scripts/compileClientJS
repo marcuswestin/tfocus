@@ -6,4 +6,4 @@ var requireCompiler = require('require/compiler'),
 
 configureRequire(requireCompiler)
 
-sys.puts(requireCompiler.compile(process.argv[2]))
+sys.puts(requireCompiler.compile(process.argv[2], { minify:false }))
