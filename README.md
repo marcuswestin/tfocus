@@ -34,3 +34,7 @@ in .ssh/config
 	HostName 96.126.98.135
 	IdentityFile ~/.ssh/id_rsa.tfocus
 	User bot
+
+--iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+--iptables -A INPUT -i eth0 -p tcp --dport 8080 -j ACCEPT
+--iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
