@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e # die on an error
+
+source scripts/conf/remoteConf
+
+echo "push nginx.conf to ${SERVER}"
+
+echo "scp..."
+scp ${CONF_DIR}/nginx.conf root@${SERVER}:/etc/nginx/nginx.conf
