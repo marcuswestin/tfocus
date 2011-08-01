@@ -22,7 +22,7 @@ module.exports = Class(function() {
 	this._onFacebookSession = function(session) {
 		this._loginScreen.remove()
 		gData.setUser(session.id)
-		fin.connect(location.hostname, location.port, bind(this, this._onConnect))
+		fin.connect(bind(this, this._onConnect))
 	}
 	
 	this._onConnect = function() {
