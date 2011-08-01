@@ -4,6 +4,12 @@ set -e # die on an error
 
 source scripts/conf/remoteConf
 
+if [ $# -ne 1 ]
+then
+	echo "Usage: ./scripts/push/clientVersion CLIENT_VERSION"
+	exit -1
+fi
+
 echo "push ${VERSION} to ${SERVER}:${REMOTE_DIR}/${VERSION_DIR}"
 
 echo "zip and tar..."
