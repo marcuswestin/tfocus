@@ -26,6 +26,7 @@ def build(bld):
 		bld(rule=copyClientImages, imageSourceDir=clientSource+'-img', imageTargetDir=clientTarget+'-img')
 	bld(rule='mkdir -p ${PREFIX}')
 	bld(rule='ln -snf ${VERSION} ${STATIC_DIR}/current')
+	print "Building " + bld.env.VERSION
 
 # Build rules
 #############
