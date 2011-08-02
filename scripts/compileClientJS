@@ -7,11 +7,12 @@ var requireCompiler = require('require/compiler'),
 configureRequire(requireCompiler)
 
 sys.puts(requireCompiler.compile(process.argv[2], {
-	minify:false
+	// minify:false
 	// squeeze:false,
 	// mangle:false,
 	// make_seqs: false,
 	// dead_code: false,
-	// inline_script: true,
-	// max_line_length: 120
+	inline_script: true,
+	ascii_only:true
+	// max_line_length: 1000
 }))
