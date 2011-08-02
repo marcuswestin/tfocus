@@ -27,11 +27,10 @@ module.exports = Class(Server, function(supr) {
 	this._handleStylusRequest = function(match, req, res) {
 		var filename = __dirname + '/../client/' + this._clients[match[1]] + '.styl'
 		fs.readFile(filename, 'utf8', function(err, stylusSource) {
-			if (err) { return sendError(res, err, 404) }
+			if (err) { return res.sendError(err, 404) }
 			stylus.render(stylusSource, { filename:filename }, function(err, css) {
-				if (err) { return sendError(res, err, 500) }
-				res.writeHead(200, { 'Content-Type':'text/css' })
-				res.end(css)
+				if (err) { return res.sendError(err, 500) }
+				res.send(css, 'text/css')
 			})
 		})
 	}

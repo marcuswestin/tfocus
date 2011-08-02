@@ -5,7 +5,9 @@ var Class = require('std/Class'),
 	fin = require('fin'),
 	engine = require('fin/engines/development'),
 	fs = require('fs'),
-	path = require('path')
+	path = require('path'),
+	time = require('std/time'),
+	Response = require('./Response')
 
 module.exports = Class(function() {
 	
@@ -42,13 +44,14 @@ module.exports = Class(function() {
 	}
 
 	this._routeRequest = function(req, res) {
+		var response = new Response(res, this._printErrors)
 		for (var i=0, regex; regex=this._routes[i]; i++) {
 			var match = req.url.match(regex)
 			if (!match) { continue }
-			this._handlers[i].call(this, match, req, res)
+			this._handlers[i].call(this, match, req, response)
 			return
 		}
-		this._sendError(res, 404, "Unknown URL")
+		response.sendError(404, 'Unknown URL')
 	}
 	
 	/* Request handlers
@@ -60,9 +63,11 @@ module.exports = Class(function() {
 			: userAgent.match('iPhone') ? 'iphone'
 			: userAgent.match('iPod') ? 'iphone'
 			: 'iphone'
-		// TODO cache
-		res.writeHead(302, { 'Location': '/' + location + '/' })
-		res.end()
+		
+		res
+			.redirect('/'+location+'/')
+			.cache(3 * time.days)
+			.send()
 	}
 	
 	this._clients = { browser:'browser/browser', iphone:'ios/iphone' }
@@ -86,23 +91,16 @@ module.exports = Class(function() {
 	this._sendStaticFile = function(version, pathBase, extension, res) {
 		// TODO read from memory cache
 		fs.readFile(this._getStaticPath(version, pathBase, extension), 'utf8', bind(this, function(err, contents) {
-			if (err) { return this._sendError(res, 404, err) }
 			// TODO cache in memory
-			// TODO cache
-			// TODO content length
-			res.writeHead(200, { 'Content-Type':this._contentTypes[extension] })
-			res.end(contents)
+			if (err) { return this._sendError(res, 404, err) }
+			res
+				.cache(3 * time.hours)
+				.send(contents, this._contentTypes[extension])
 		}))
 	}
 	
 	this._getStaticPath = function(version, pathBase, extension) {
 		return this._staticDir+'/'+version+'/'+pathBase+'.'+extension
-	}
-
-	this._sendError = function(res, code, err) {
-		res.writeHead(code || 500)
-		var message = this._printErrors && (err.stack ? err.stack : err.message || err)
-		res.end(message)
 	}
 })
 
