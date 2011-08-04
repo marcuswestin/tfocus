@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+waf configure clean build -p
+# waf install
