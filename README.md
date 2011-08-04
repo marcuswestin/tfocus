@@ -1,3 +1,9 @@
+git submodule init
+git submodule update
+cd node_modules/fin/node_modules/socket.io-server/
+sudo npm install .
+
+
 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
 	sudo apt-get install python-software-properties

@@ -24,7 +24,7 @@ module.exports = new Class(UIComponent, function(supr) {
 	
 	this._renderHeader = function() {
 		return DIV('header',
-			BUTTON({ click:bind(gData, gData.createTask) }, 'Create task')
+			BUTTON({ click:bind(gData, gData.createTask) }, '+')
 		)
 	}
 	
