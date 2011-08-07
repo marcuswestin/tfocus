@@ -3,6 +3,7 @@ git submodule update
 cd node_modules/fin/
 sudo npm install .
 
+apt-get install haproxy
 
 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
@@ -40,7 +41,3 @@ in .ssh/config
 	HostName 96.126.98.135
 	IdentityFile ~/.ssh/id_rsa.tfocus
 	User bot
-
---iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
---iptables -A INPUT -i eth0 -p tcp --dport 8080 -j ACCEPT
---iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080

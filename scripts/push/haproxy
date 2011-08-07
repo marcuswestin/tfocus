@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e # die on an error
+
+if ! git diff-index --quiet HEAD --; then
+	echo "Git tree is dirty - please commit or stash changes before pushing"
+	exit 1
+fi
+
+source scripts/conf/remoteConf
+
+echo "push haproxy.conf to ${SERVER}"
+
+echo "scp..."
+scp ${CONF_DIR}/haproxy.conf root@${SERVER}:${REMOTE_DIR}/

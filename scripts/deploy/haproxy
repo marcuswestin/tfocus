@@ -4,25 +4,21 @@ set -e # die on an error
 
 source scripts/conf/remoteConf
 
-echo "restart node server on ${SERVER}..."
+echo "restart haproxy on ${SERVER}"
 
-echo "ssh..."
+echo "ssh"
 echo "
 	# do not die on an error, as killall may not have a process to kill
 	
 	cd ${REMOTE_DIR}
 	
 	echo 'kill...'
-	killall node
+	killall hapxory
 	
 	echo 'start...'
-	nohup scripts/run/prod &>${TIME}.log &
+	nohup haproxy -f haproxy.conf &>${TIME}.log &
 	
 	exit 0
-" | ssh ${SERVER} bash
+" | ssh root@${SERVER} bash
 
 echo "done"
-
-
-# sudo killall node
-# nohup node run/prod.js &>dashboard-${BUILD}.log&
