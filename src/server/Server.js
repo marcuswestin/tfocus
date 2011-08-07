@@ -22,7 +22,7 @@ module.exports = Class(function() {
 	
 	this.run = function() {
 		this._setupRoutes()
-		fin.mount(this._httpServer, this._finEngine)
+		fin.mount(this._httpServer, this._finEngine, { 'transports':['xhr-polling', 'jsonp-polling'], 'log level': 1 })
 		this._httpServer.listen(this._port, this._host)
 	}
 	
