@@ -34,7 +34,7 @@ module.exports = Class(function() {
 		this._res.writeHead(code || 500)
 		var message = this._printErrors && (err.stack ? err.stack : err.message || err)
 		this._res.end(message)
-		sys.err.write("RESPONSE ERROR code:" + code + " error:" + (err.stack ? err.stack : (err + ": " + new Error().stack)))
+		process.stderr.write("RESPONSE ERROR code:" + code + " error:" + (err.stack ? err.stack : (err + ": " + new Error().stack)) + "\n")
 		return this
 	}
 })
