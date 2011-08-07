@@ -51,7 +51,7 @@ module.exports = Class(function() {
 			this._handlers[i].call(this, match, req, response)
 			return
 		}
-		response.sendError(404, 'Unknown URL')
+		response.sendError('Unknown URL ' + req.url, 404)
 	}
 	
 	/* Request handlers
@@ -92,7 +92,7 @@ module.exports = Class(function() {
 		// TODO read from memory cache
 		fs.readFile(this._getStaticPath(version, pathBase, extension), 'utf8', bind(this, function(err, contents) {
 			// TODO cache in memory
-			if (err) { return this._sendError(res, 404, err) }
+			if (err) { return this._sendError(err, 404) }
 			res
 				.cache(3 * time.hours)
 				.send(contents, this._contentTypes[extension])
