@@ -18,4 +18,6 @@ module.exports = function(requireCompilerOrServer) {
 
 		.addPath('browser', srcDir + '/client/browser')
 		.addFile('browser', srcDir + '/client/browser/browser.js')
+		
+		.addReplacement("'object' === typeof module ? module.exports : (window.io = {})", "window.io = {}") // from fin
 }

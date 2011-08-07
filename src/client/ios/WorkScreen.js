@@ -40,7 +40,7 @@ module.exports = Class(WorkScreen, function() {
 		this._taskFocus.style({ position:'absolute', top:0 })
 		var viewportSize = getViewportSize(this._win)
 		this._taskTitleInput.style({ width:viewportSize.width, height:viewportSize.height - this._headerHeight })
-		this._taskTitleInput.getElement().value = this._focusedTask.title.current()
+		this._taskTitleInput.getElement().value = this._focusedTask.title.getCachedValue()
 		this._taskTitleInput.getElement().focus()
 		
 		// var offsetTop = node.getElement().offsetTop,

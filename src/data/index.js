@@ -1,6 +1,6 @@
-var finOrmAPI = require('fin/lib/orm-api')
+var fin = require('fin/lib/orm-api')
 
-finOrmAPI.process({
+fin.orm.process({
 	"Global": {
 		"allTasks": { id:1, type:"List", of:"Task" }
 	},
@@ -16,7 +16,7 @@ finOrmAPI.process({
 
 module.exports = {
 	setUser: setUser,
-	taskList: finOrmAPI.global.allTasks,
+	taskList: fin.orm.global.allTasks,
 	createTask: createTask
 }
 
@@ -28,7 +28,7 @@ function setUser(userID) {
 function createTask(callback) {
 	var task = new fin.orm.Task({ title:"A task!", owner:user })
 	gData.taskList.push(task)
-	finOrmAPI.waitForGUID(task, function(id) {
+	task.waitForGUID(function(id) {
 		callback(task)
 	})
 }

@@ -1,6 +1,6 @@
 git submodule init
 git submodule update
-cd node_modules/fin/node_modules/socket.io-server/
+cd node_modules/fin/
 sudo npm install .
 
 
