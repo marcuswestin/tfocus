@@ -10,7 +10,8 @@ fin.orm.process({
 	},
 	"Task": {
 		"title": { id:1, type:"Text" },
-		"owner": { id:2, type:"User" }
+		"owner": { id:2, type:"User" },
+		"done":  { id:3, type:"Boolean" }
 	}
 })
 

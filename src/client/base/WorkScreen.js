@@ -39,7 +39,10 @@ module.exports = new Class(UIComponent, function(supr) {
 	}
 
 	this._renderTask = function(task) {
-		this._nodes[task._oid] = DIV('task', { data:task.title, mouseup:bind(this, this._handleTaskClick, task) }).appendTo(this._taskList)
+		this._nodes[task._oid] = DIV('task',
+			INPUT('done', { type:'checkbox', data:task.done }),
+			DIV('title', { data:task.title, mouseup:bind(this, this._handleTaskClick, task) })
+		).appendTo(this._taskList)
 	}
 	
 	this._handleTaskClick = function(task) {
