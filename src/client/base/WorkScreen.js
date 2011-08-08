@@ -39,10 +39,18 @@ module.exports = new Class(UIComponent, function(supr) {
 	}
 
 	this._renderTask = function(task) {
-		this._nodes[task._oid] = DIV('task',
+		var node = this._nodes[task._oid] = DIV('task',
 			INPUT('done', { type:'checkbox', data:task.done }),
 			DIV('title', { data:task.title, mouseup:bind(this, this._handleTaskClick, task) })
 		).appendTo(this._taskList)
+		var checkHideTask = function() {
+			var doHide = gData.local.hideCompletedTasks.getCachedValue(),
+				isDone = task.done.getCachedValue(),
+				display = (doHide && isDone == true) ? 'none' : 'block'
+			node.style({ display:display })
+		}
+		gData.local.hideCompletedTasks.observe(checkHideTask)
+		task.done.observe(checkHideTask)
 	}
 	
 	this._handleTaskClick = function(task) {

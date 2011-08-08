@@ -8,7 +8,11 @@ module.exports = Class(WorkScreen, function() {
 		return DIV('header',
 			DIV('shadow',
 				SPAN('logo', 'Work'),
-				BUTTON({ click:bind(gData, gData.createTask, bind(this, this._selectTask)) }, '+')
+				BUTTON({ click:bind(gData, gData.createTask, bind(this, this._selectTask)) }, '+'),
+				DIV('hideCompletedTasks',
+					'Hide completed',
+					INPUT({ type:'checkbox', data:gData.local.hideCompletedTasks })
+				)
 			)
 		)
 	}
