@@ -4,6 +4,7 @@ cd node_modules/fin/
 sudo npm install .
 
 apt-get install haproxy
+sudo haproxy -f scripts/conf/haproxy.conf
 
 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
