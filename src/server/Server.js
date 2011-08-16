@@ -75,7 +75,7 @@ module.exports = Class(function() {
 	this._currentVersionLink = 'current'
 	this._handleClientHTMLRequest = function(match, req, res) {
 		var clientPathBase = this._clients[match[1]]
-		if (!clientPathBase) { return this._sendError(res, 404) }
+		if (!clientPathBase) { return res.sendError('No such client "'+match[1]+'"', 404) }
 		var reqClient = client.parse(req.headers['user-agent'])
 		if (reqClient.isIOS && reqClient.osVersion < 5.0) {
 			this._sendJSError(res, 'Aw shucks. You need iOS 5.0')
@@ -98,7 +98,7 @@ module.exports = Class(function() {
 		// TODO read from memory cache
 		fs.readFile(this._getStaticPath(version, pathBase, extension), 'utf8', bind(this, function(err, contents) {
 			// TODO cache in memory
-			if (err) { return this._sendError(err, 404) }
+			if (err) { return res.sendError(err, 404) }
 			res
 				.cache(3 * time.hours)
 				.send(contents, this._contentTypes[extension])
