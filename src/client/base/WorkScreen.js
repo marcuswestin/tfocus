@@ -16,7 +16,7 @@ module.exports = new Class(UIComponent, function(supr) {
 
 		DIV('WorkScreen',
 			this._header = this._renderHeader().render(this).style({ height:this._headerHeight }),
-			this._body = this._renderBody().render(this).style({ top:this._headerHeight + 4 }),
+			this._body = this._renderBody().render(this).style({ top:this._headerHeight + 4 })
 		).appendTo(this)
 	}
 	
