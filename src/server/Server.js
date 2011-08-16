@@ -7,7 +7,8 @@ var Class = require('std/Class'),
 	fs = require('fs'),
 	path = require('path'),
 	time = require('std/time'),
-	Response = require('./Response')
+	Response = require('./Response'),
+	client = require('std/client')
 
 module.exports = Class(function() {
 	
@@ -57,11 +58,11 @@ module.exports = Class(function() {
 	/* Request handlers
 	 ******************/
 	this._handleRootRequest = function(match, req, res) {
-		var userAgent = req.headers['user-agent']
+		var reqClient = client.parse(req.headers['user-agent'])
 		var location = 
-			  userAgent.match('iPad') ? 'iphone'
-			: userAgent.match('iPhone') ? 'iphone'
-			: userAgent.match('iPod') ? 'iphone'
+			  reqClient.isIPad ? 'iphone'
+			: reqClient.isIPhone ? 'iphone'
+			: reqClient.isIPod ? 'iphone'
 			: 'iphone'
 		
 		res
@@ -75,6 +76,11 @@ module.exports = Class(function() {
 	this._handleClientHTMLRequest = function(match, req, res) {
 		var clientPathBase = this._clients[match[1]]
 		if (!clientPathBase) { return this._sendError(res, 404) }
+		var reqClient = client.parse(req.headers['user-agent'])
+		if (reqClient.isIOS && reqClient.osVersion < 5.0) {
+			this._sendJSError(res, 'Aw shucks. You need iOS 5.0')
+			return
+		}
 		this._sendStaticFile(this._currentVersionLink, 'client/' + clientPathBase, 'html', res)
 	}
 	
@@ -101,6 +107,12 @@ module.exports = Class(function() {
 	
 	this._getStaticPath = function(version, pathBase, extension) {
 		return this._staticDir+'/'+version+'/'+pathBase+'.'+extension
+	}
+	
+	this._sendJSError = function(res, message) {
+		res
+			.cache(3 * time.hours)
+			.send('<script>alert("'+message+'")</script>', 'text/html')
 	}
 })
 
