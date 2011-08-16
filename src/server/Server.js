@@ -36,6 +36,7 @@ module.exports = Class(function() {
 			._setupRoute(/^\/$/, this._handleRootRequest)
 			._setupRoute(/^\/(\w+)\/$/, this._handleClientHTMLRequest)
 			._setupRoute(/^\/static\/([\w\d-]+)\/([^\.]+)\.(\w+)/, this._handleStaticRequest)
+			._setupRoute(/^\/apple-touch-icon.*\.png$/, this._notFound)
 	}
 	
 	this._setupRoute = function(regex, handler) {
@@ -89,6 +90,13 @@ module.exports = Class(function() {
 			path = match[2],
 			extension = match[3]
 		this._sendStaticFile(version, path, extension, res)
+	}
+	
+	this._notFound = function(match, req, res) {
+		res
+			.noContent()
+			.cache(3 * time.days)
+			.send()
 	}
 	
 	/* Util

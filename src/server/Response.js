@@ -21,6 +21,11 @@ module.exports = Class(function() {
 		return this
 	}
 	
+	this.noContent = function() {
+		this._code = 204
+		return this
+	}
+	
 	this.send = function(data, contentType) {
 		// TODO No-Content if content length == 0
 		if (data) { this._headers['Content-Length'] = data.length }
