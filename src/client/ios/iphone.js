@@ -1,5 +1,4 @@
 require('globals')
-require('scrollability')
 
 var Client = require('base/Client'),
   LoginScreen = require('base/LoginScreen'),

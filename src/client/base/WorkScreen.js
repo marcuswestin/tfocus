@@ -3,7 +3,6 @@ var UIComponent = require('ui/dom/Component')
 module.exports = new Class(UIComponent, function(supr) {
 
 	this._headerHeight = 30
-	this._footerHeight = 0
 	
 	this.init = function() {
 		supr(this, 'init')
@@ -17,8 +16,7 @@ module.exports = new Class(UIComponent, function(supr) {
 
 		DIV('WorkScreen',
 			this._header = this._renderHeader().render(this).style({ height:this._headerHeight }),
-			this._body = this._renderBody().render(this).style({ top:this._headerHeight + 4, bottom:this._footerHeight }),
-			this._footer = this._renderFooter().render(this).style({ height:this._footerHeight })
+			this._body = this._renderBody().render(this).style({ top:this._headerHeight + 4 }),
 		).appendTo(this)
 	}
 	
@@ -34,10 +32,6 @@ module.exports = new Class(UIComponent, function(supr) {
 		)
 	}
 	
-	this._renderFooter = function() {
-		return DIV('footer')
-	}
-
 	this._renderTask = function(task) {
 		var node = this._nodes[task._oid] = DIV('task',
 			INPUT('done', { type:'checkbox', data:task.done }),

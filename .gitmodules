@@ -10,9 +10,6 @@
 [submodule "node_modules/std"]
 	path = node_modules/std
 	url = git@github.com:marcuswestin/std.js.git
-[submodule "node_modules/scrollability"]
-	path = node_modules/scrollability
-	url = git@github.com:marcuswestin/scrollability.git
 [submodule "node_modules/stylus"]
 	path = node_modules/stylus
 	url = git@github.com:marcuswestin/stylus.git

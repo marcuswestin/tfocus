@@ -7,7 +7,6 @@ module.exports = function(requireCompilerOrServer) {
 		.addPath('std', modulesDir + '/std.js')
 		.addPath('fin', modulesDir + '/fin')
 		.addPath('ui', modulesDir + '/ui.js')
-		.addFile('scrollability', modulesDir + '/scrollability/scrollability.js')
 
 		.addPath('data', srcDir + '/data')
 		.addPath('base', srcDir + '/client/base')

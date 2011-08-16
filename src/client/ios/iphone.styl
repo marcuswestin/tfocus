@@ -5,26 +5,22 @@ reset()
 box-shadow()
 	-webkit-box-shadow arguments; box-shadow arguments;
 
-component()
-	position absolute; overflow hidden; width 100%;
-
 reset()
 
 .WorkScreen
 	.header
-		component(); top 0; padding 4px 4px 0; box-shadow 0 3px 5px #888;
+		position fixed; top 0; padding 4px 4px 0; box-shadow 0 3px 5px #888; background:#fff; width:100%;
 		.logo
 			text-shadow 2px 2px 3px #333;
 		.hideCompletedTasks
 			float right; margin 0 8px 0 0;
 	.body
-		component();
+		.taskList
+			margin:35px 0 0 0;
 		.task
 			padding 4px 8px 8px; border-bottom:1px solid #ccc; height:22px; line-height:26px; overflow:hidden; cursor:pointer;
 			.done
 				float right;
-	.footer
-		component(); bottom 0;
 
 .taskFocus textarea
 	font-size 16px; padding 8px;

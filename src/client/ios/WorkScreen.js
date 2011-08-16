@@ -17,14 +17,6 @@ module.exports = Class(WorkScreen, function() {
 		)
 	}
 	
-	this._renderBody = function() {
-		return DIV('body',
-			this._scrollDiv = DIV('scrollable vertical',
-				this._taskList = DIV('taskList')
-			)
-		)
-	}
-	
 	this._deselectTask = function(task, node) {
 		node.style({ height:this._taskHeight })
 	}
@@ -41,7 +33,7 @@ module.exports = Class(WorkScreen, function() {
 		}
 		this._focusedTask = task
 		this._taskFocus.appendTo(this._body)
-		this._taskFocus.style({ position:'absolute', top:0 })
+		this._taskFocus.style({ position:'fixed', top:0, height:'100%' })
 		var viewportSize = getViewportSize(this._win)
 		this._taskTitleInput.style({ width:viewportSize.width, height:viewportSize.height - this._headerHeight })
 		this._taskTitleInput.getElement().value = this._focusedTask.title.getCachedValue()
@@ -50,7 +42,6 @@ module.exports = Class(WorkScreen, function() {
 		// var offsetTop = node.getElement().offsetTop,
 		// 	height = getDocumentHeight(this._doc) - this._header.getOffset().height - this._footer.getOffset().height
 		// node.style({ height:height })
-		// scrollability.scrollTo(this._scrollDiv.getElement(), 0, -offsetTop, 0)
 	}
 	
 	this._onFocusedTaskTitleKeyPress = function() {
