@@ -19,6 +19,7 @@ module.exports = Class(function() {
 		this._printErrors = opts.printErrors
 		this._finEngine = require('fin/engines/' + opts.engine)
 		this._httpServer = http.createServer(bind(this, this._routeRequest))
+		this._favicon = fs.readFileSync(this._getStaticPath('current', 'client/img/favicon.ico'))
 	}
 	
 	this.run = function() {
@@ -33,8 +34,8 @@ module.exports = Class(function() {
 		this._routes = []
 		this._handlers = []
 		this
-			._setupRoute(/^\/$/, this._handleRootRequest)
 			._setupRoute(/^\/(\w+)\/$/, this._handleClientHTMLRequest)
+			._setupRoute(/^\/favicon\.ico$/, this._serveFavicon)
 			._setupRoute(/^\/static\/([\w\d-]+)\/([^\.]+)\.(\w+)/, this._handleStaticRequest)
 			._setupRoute(/^\/apple-touch-icon.*\.png$/, this._notFound)
 	}
@@ -58,6 +59,12 @@ module.exports = Class(function() {
 	
 	/* Request handlers
 	 ******************/
+	this._serveFavicon = function(match, req, res) {
+		res
+			.cache(30 * time.days)
+			.send(this._favicon, 'image/ico')
+	}
+	
 	this._handleRootRequest = function(match, req, res) {
 		var reqClient = client.parse(req.headers['user-agent'])
 		var location = 
@@ -104,7 +111,7 @@ module.exports = Class(function() {
 	this._contentTypes = { html:'text/html', js:'text/javascript', png:'image/png' }
 	this._sendStaticFile = function(version, pathBase, extension, res) {
 		// TODO read from memory cache
-		fs.readFile(this._getStaticPath(version, pathBase, extension), 'utf8', bind(this, function(err, contents) {
+		fs.readFile(this._getStaticPath(version, pathBase+'.'+extension), 'utf8', bind(this, function(err, contents) {
 			// TODO cache in memory
 			if (err) { return res.sendError(err, 404) }
 			res
@@ -113,8 +120,8 @@ module.exports = Class(function() {
 		}))
 	}
 	
-	this._getStaticPath = function(version, pathBase, extension) {
-		return this._staticDir+'/'+version+'/'+pathBase+'.'+extension
+	this._getStaticPath = function(version, path) {
+		return this._staticDir+'/'+version+'/'+path
 	}
 	
 	this._sendJSError = function(res, message) {
