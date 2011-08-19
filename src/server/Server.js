@@ -34,6 +34,7 @@ module.exports = Class(function() {
 		this._routes = []
 		this._handlers = []
 		this
+			._setupRoute(/^\/$/, this._handleRootRequest)
 			._setupRoute(/^\/(\w+)\/$/, this._handleClientHTMLRequest)
 			._setupRoute(/^\/favicon\.ico$/, this._serveFavicon)
 			._setupRoute(/^\/static\/([\w\d-]+)\/([^\.]+)\.(\w+)/, this._handleStaticRequest)
