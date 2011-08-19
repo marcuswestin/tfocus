@@ -10,14 +10,15 @@ module.exports = new Class(UIComponent, function(supr) {
 	}
 
 	this.renderContent = function() {
-		gData.taskList
-			.on('push', bind(this, this._renderTask))
-			.on('remove', bind(this, this._removeTask))
-
 		DIV('WorkScreen',
 			this._header = this._renderHeader().render(this).style({ height:this._headerHeight }),
 			this._body = this._renderBody().render(this).style({ top:this._headerHeight + 4 })
 		).appendTo(this)
+
+		gData.taskList
+			.on('clear', bind(this, this._clearTasks))
+			.on('push', bind(this, this._renderTask))
+			.on('remove', bind(this, this._removeTask))
 	}
 	
 	this._renderHeader = function() {
@@ -30,6 +31,11 @@ module.exports = new Class(UIComponent, function(supr) {
 		return DIV('body',
 			this._taskList = DIV('taskList')
 		)
+	}
+	
+	this._clearTasks = function() {
+		this._taskList.getElement().innerHTML = ''
+		this._nodes = {}
 	}
 	
 	this._renderTask = function(task) {
