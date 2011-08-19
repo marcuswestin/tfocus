@@ -19,7 +19,7 @@ module.exports = Class(function() {
 		this._printErrors = opts.printErrors
 		this._finEngine = require('fin/engines/' + opts.engine)
 		this._httpServer = http.createServer(bind(this, this._routeRequest))
-		this._favicon = fs.readFileSync(this._getStaticPath('current', 'client/img/favicon.ico'))
+		this._favicon = fs.readFileSync(__dirname + '/img/favicon.ico')
 	}
 	
 	this.run = function() {
