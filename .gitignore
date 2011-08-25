@@ -2,6 +2,7 @@
 
 # Fin development
 _development-engine-dump.json
+.bin
 
 # Waf stuff
 build
