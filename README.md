@@ -1,7 +1,14 @@
-git submodule init
-git submodule update
-cd node_modules/fin/
-sudo npm install .
+tfocus
+======
+
+set up
+------
+
+	git submodule init
+	git submodule update
+	cd node_modules/fin/
+	sudo npm install .
+	cd ../..
 
 apt-get install haproxy
 sudo haproxy -f scripts/conf/haproxy.conf
