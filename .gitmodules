@@ -12,7 +12,7 @@
 	url = git@github.com:marcuswestin/std.js.git
 [submodule "node_modules/stylus"]
 	path = node_modules/stylus
-	url = git@github.com:marcuswestin/stylus.git
+	url = git@github.com:LearnBoost/stylus.git
 [submodule "node_modules/uglify-js"]
 	path = node_modules/uglify-js
 	url = https://github.com/mishoo/UglifyJS.git
